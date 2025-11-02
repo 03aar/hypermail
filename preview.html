@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperMail - Email, elevated to intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0052CC;
+            --gradient: linear-gradient(135deg, #0066FF 0%, #00B4FF 100%);
+            --text: #000000;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --bg: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --border: #E5E5E5;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 24px 64px rgba(0,0,0,0.16);
+            --urgent: #FF3B30;
+            --important: #FF9500;
+            --normal: #34C759;
+            --fyi: #007AFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Brand Introduction Animation */
+        #brand-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #brand-intro.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .brand-content {
+            text-align: center;
+        }
+
+        .brand-h {
+            font-size: 120px;
+            font-weight: 700;
+            color: #FFFFFF;
+            opacity: 0;
+            animation: fadeInH 1.5s ease-out forwards;
+        }
+
+        .brand-full {
+            display: none;
+        }
+
+        .brand-full.active {
+            display: block;
+        }
+
+        .brand-letters {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .brand-letters span {
+            font-size: 80px;
+            font-weight: 700;
+            color: #FFFFFF;
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+        }
+
+        .brand-logo {
+            margin: 40px auto;
+            width: 100px;
+            height: 100px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            opacity: 0;
+        }
+
+        .brand-tagline {
+            font-size: 24px;
+            font-weight: 300;
+            color: #E0E0E0;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInH {
+            to { opacity: 1; }
+        }
+
+        @keyframes letterAppear {
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes logoAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes taglineAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Landing Page */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,102,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,102,255,0.4);
+        }
+
+        .hero {
+            padding: 160px 32px 80px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #000000 0%, #666666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            padding: 18px 48px;
+            font-size: 18px;
+            border-radius: 32px;
+        }
+
+        .social-proof {
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .features {
+            padding: 80px 32px;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(40px);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .modal-backdrop.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+
+        .modal-close button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close button:hover {
+            color: var(--text);
+        }
+
+        .modal-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .oauth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .oauth-btn {
+            height: 56px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .oauth-btn:hover {
+            border-color: var(--text);
+            background: #FAFAFA;
+        }
+
+        .oauth-btn:active {
+            transform: scale(0.98);
+        }
+
+        .oauth-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+            color: var(--text-tertiary);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input {
+            width: 100%;
+            height: 56px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 0 20px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0,102,255,0.1);
+        }
+
+        .input.error {
+            border-color: var(--urgent);
+        }
+
+        .input.success {
+            border-color: var(--normal);
+        }
+
+        .btn-block {
+            width: 100%;
+            height: 56px;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Import Animation */
+        #import-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0A0A14 0%, #1A1A2E 100%);
+            z-index: 8000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #import-screen.active {
+            display: flex;
+        }
+
+        .particles-container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        .import-status {
+            color: white;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .import-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            width: 400px;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 8px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .import-count {
+            color: var(--text-tertiary);
+            margin-top: 16px;
+            font-size: 18px;
+        }
+
+        /* Inbox Interface */
+        #inbox {
+            display: none;
+            height: 100vh;
+            padding-top: 64px;
+        }
+
+        #inbox.active {
+            display: block;
+        }
+
+        .inbox-container {
+            display: flex;
+            height: calc(100vh - 64px);
+        }
+
+        .sidebar {
+            width: 240px;
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            padding: 24px 16px;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .nav-item.active .nav-count {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .email-list {
+            width: 480px;
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+        }
+
+        .email-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .email-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .email-item.active {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--primary);
+        }
+
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .email-sender {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .email-date {
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .email-subject {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .email-preview {
+            color: var(--text-secondary);
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-priority {
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 3px;
+            height: calc(100% - 40px);
+        }
+
+        .email-priority.urgent { background: var(--urgent); }
+        .email-priority.important { background: var(--important); }
+        .email-priority.normal { background: var(--normal); }
+        .email-priority.fyi { background: var(--fyi); }
+
+        .reading-pane {
+            flex: 1;
+            background: var(--bg);
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        .email-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-secondary);
+            border-color: var(--text-secondary);
+        }
+
+        .email-content {
+            max-width: 680px;
+        }
+
+        .email-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sender-info {
+            flex: 1;
+        }
+
+        .sender-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .sender-email {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .email-body {
+            line-height: 1.8;
+            margin-top: 32px;
+        }
+
+        .email-body p {
+            margin-bottom: 16px;
+        }
+
+        .contact-panel {
+            width: 320px;
+            background: var(--bg);
+            border-left: 1px solid var(--border);
+            padding: 32px 24px;
+            overflow-y: auto;
+        }
+
+        .contact-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 auto 16px;
+        }
+
+        .contact-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .contact-title {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .contact-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        .contact-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ai-insight {
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 48px 32px;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .inbox-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .email-list {
+                width: 100%;
+            }
+
+            .contact-panel {
+                display: none;
+            }
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Brand Introduction -->
+    <div id="brand-intro">
+        <div class="brand-content">
+            <div class="brand-h">H</div>
+            <div class="brand-full">
+                <div class="brand-letters">
+                    <span>H</span><span>y</span><span>p</span><span>e</span><span>r</span><span>M</span><span>a</span><span>i</span><span>l</span>
+                </div>
+                <div class="brand-logo">⚡</div>
+                <div class="brand-tagline">Email, elevated to intelligence</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landing">
+        <!-- Header -->
+        <header class="header">
+            <a href="#" class="logo">
+                <div class="logo-icon">H</div>
+                HyperMail
+            </a>
+            <div class="header-buttons">
+                <button class="btn btn-ghost" onclick="showSignIn()">Sign In</button>
+                <button class="btn btn-primary" onclick="showSignUp()">Sign Up</button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title fade-in">
+                Email, elevated to<br/>intelligence
+            </h1>
+            <p class="hero-subtitle fade-in">
+                The fastest, smartest email platform built for executives and high-performance teams
+            </p>
+            <button class="btn btn-primary hero-cta fade-in" onclick="showSignUp()">
+                Get Started — It's free
+            </button>
+            <p class="social-proof fade-in">
+                Trusted by teams at Google, Stripe, Notion
+            </p>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">
+                        Zero-lag navigation with keyboard-first interface. Process emails in seconds, not minutes.
+                    </p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered</h3>
+                    <p class="feature-description">
+                        Smart triage, auto-drafting, and predictive responses that learn your communication style.
+                    </p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏢</div>
+                    <h3 class="feature-title">Enterprise Ready</h3>
+                    <p class="feature-description">
+                        Built for teams with collaboration, analytics, and enterprise-grade security.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 HyperMail. Built with obsession to detail.</p>
+        </footer>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signup-modal" class="modal-backdrop">
+        <div class="modal">
+            <div class="modal-close">
+                <button onclick="closeModal('signup-modal')">✕</button>
+            </div>
+            <h2 class="modal-title">Welcome to HyperMail</h2>
+            <p class="modal-subtitle">Let's create your account</p>
+
+            <div class="oauth-buttons">
+                <button class="oauth-btn" onclick="oauthSignup('google')">
+                    <span class="oauth-icon">G</span>
+                    Continue with Google Workspace
+                </button>
+                <button class="oauth-btn" onclick="oauthSignup('microsoft')">
+                    <span class="oauth-icon">M</span>
+                    Continue with Microsoft 365
+                </button>
+                <button class="oauth-btn" onclick="oauthSignup('apple')">
+                    <span class="oauth-icon"></span>
+                    Continue with Apple
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="input-group">
+                <input type="email" class="input" placeholder="name@company.com" id="signup-email">
+            </div>
+
+            <button class="btn btn-primary btn-block" onclick="emailSignup()">
+                Continue with Email
+            </button>
+
+            <p class="modal-footer">
+                Already have an account? <a href="#" onclick="showSignIn(); return false;">Sign in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div id="signin-modal" class="modal-backdrop">
+        <div class="modal">
+            <div class="modal-close">
+                <button onclick="closeModal('signin-modal')">✕</button>
+            </div>
+            <h2 class="modal-title">Welcome back</h2>
+            <p class="modal-subtitle">Sign in to your account</p>
+
+            <div class="oauth-buttons">
+                <button class="oauth-btn" onclick="oauthSignup('google')">
+                    <span class="oauth-icon">G</span>
+                    Continue with Google
+                </button>
+                <button class="oauth-btn" onclick="oauthSignup('microsoft')">
+                    <span class="oauth-icon">M</span>
+                    Continue with Microsoft
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="input-group">
+                <input type="email" class="input" placeholder="Email address">
+            </div>
+
+            <div class="input-group">
+                <input type="password" class="input" placeholder="Password">
+            </div>
+
+            <button class="btn btn-primary btn-block" onclick="emailSignup()">
+                Sign In
+            </button>
+
+            <p class="modal-footer">
+                Don't have an account? <a href="#" onclick="showSignUp(); return false;">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Import Screen -->
+    <div id="import-screen">
+        <div class="particles-container" id="particles"></div>
+        <div class="import-status">
+            <h2 class="import-title" id="import-title">Organizing your emails...</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <p class="import-count" id="import-count">0 emails sorted</p>
+        </div>
+    </div>
+
+    <!-- Inbox Interface -->
+    <div id="inbox">
+        <header class="header">
+            <a href="#" class="logo">
+                <div class="logo-icon">H</div>
+                HyperMail
+            </a>
+            <div class="header-buttons">
+                <button class="btn btn-primary" onclick="alert('Compose feature coming soon!')">Compose</button>
+            </div>
+        </header>
+
+        <div class="inbox-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="nav-item active">
+                    <span class="nav-label">
+                        <span>📥</span> Inbox
+                    </span>
+                    <span class="nav-count">13</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>⭐</span> VIP
+                    </span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>📌</span> Pinned
+                    </span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>📤</span> Sent
+                    </span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>📝</span> Drafts
+                    </span>
+                    <span class="nav-count">2</span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>📁</span> All Mail
+                    </span>
+                </div>
+                <div class="nav-item">
+                    <span class="nav-label">
+                        <span>🗑️</span> Trash
+                    </span>
+                </div>
+            </div>
+
+            <!-- Email List -->
+            <div class="email-list">
+                <div class="email-item active" onclick="selectEmail(0)">
+                    <div class="email-priority urgent"></div>
+                    <div class="email-header">
+                        <span class="email-sender">Allie Chan</span>
+                        <span class="email-date">MAY 13</span>
+                    </div>
+                    <div class="email-subject">macOS Upgrade Required</div>
+                    <div class="email-preview">Hi Team! Apple has released a new security update...</div>
+                </div>
+
+                <div class="email-item" onclick="selectEmail(1)">
+                    <div class="email-priority important"></div>
+                    <div class="email-header">
+                        <span class="email-sender">Miles Ninh</span>
+                        <span class="email-date">MAY 13</span>
+                    </div>
+                    <div class="email-subject">Spec Review Requested</div>
+                    <div class="email-preview">Round 2 of the onboarding experience needs your review...</div>
+                </div>
+
+                <div class="email-item" onclick="selectEmail(2)">
+                    <div class="email-priority normal"></div>
+                    <div class="email-header">
+                        <span class="email-sender">Amelia Lee</span>
+                        <span class="email-date">MAY 12</span>
+                    </div>
+                    <div class="email-subject">Early visibility into Q3 growth</div>
+                    <div class="email-preview">Hello! I just shared a Google doc with Q3 projections...</div>
+                </div>
+
+                <div class="email-item" onclick="selectEmail(3)">
+                    <div class="email-priority fyi"></div>
+                    <div class="email-header">
+                        <span class="email-sender">Noel, Amelia, Allie</span>
+                        <span class="email-date">MAY 12</span>
+                    </div>
+                    <div class="email-subject">Homepage Header A/B Test</div>
+                    <div class="email-preview">Hi! Super excited to get the ball rolling on this...</div>
+                </div>
+
+                <div class="email-item" onclick="selectEmail(4)">
+                    <div class="email-priority normal"></div>
+                    <div class="email-header">
+                        <span class="email-sender">Simone, Amelia, Allie</span>
+                        <span class="email-date">MAY 10</span>
+                    </div>
+                    <div class="email-subject">Invitation: Q3 Project Reprioritization</div>
+                    <div class="email-preview">Q3 Project Reprioritization AMA join us for...</div>
+                </div>
+            </div>
+
+            <!-- Reading Pane -->
+            <div class="reading-pane">
+                <div class="email-actions">
+                    <button class="action-btn">← Back</button>
+                    <button class="action-btn">Archive</button>
+                    <button class="action-btn">Delete</button>
+                    <button class="action-btn">⋯</button>
+                    <button class="btn btn-primary" style="margin-left: auto;">Reply</button>
+                </div>
+
+                <div class="email-content">
+                    <div class="email-meta">
+                        <div class="avatar">AC</div>
+                        <div class="sender-info">
+                            <div class="sender-name">Allie Chan</div>
+                            <div class="sender-email">allie@superhuman.com</div>
+                        </div>
+                        <div class="email-date" style="margin-left: auto;">Oct 30, 2:34 PM</div>
+                    </div>
+
+                    <h2 style="font-size: 24px; margin-bottom: 24px;">macOS Upgrade Required</h2>
+
+                    <div class="email-body">
+                        <p>Hi Team!</p>
+                        <p>Apple has released a new security update for macOS that addresses several critical vulnerabilities. IT recommends that everyone update their devices by end of week.</p>
+                        <p>The update includes:</p>
+                        <ul style="margin-left: 24px; margin-bottom: 16px;">
+                            <li>Enhanced security patches</li>
+                            <li>Performance improvements</li>
+                            <li>Bug fixes for Mail app</li>
+                        </ul>
+                        <p>Please let me know if you have any issues with the update.</p>
+                        <p>Best,<br/>Allie</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Panel -->
+            <div class="contact-panel">
+                <div class="contact-avatar">AC</div>
+                <h3 class="contact-name">Allie Chan</h3>
+                <p class="contact-title">Product Manager</p>
+
+                <div class="contact-section">
+                    <div class="section-title">📊 Email Stats</div>
+                    <div class="contact-stats">
+                        <div class="stat-item">
+                            <span>Emails exchanged</span>
+                            <strong>127</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Avg response time</span>
+                            <strong>2.3h</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Response rate</span>
+                            <strong>95%</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-section">
+                    <div class="section-title">💡 AI Insight</div>
+                    <div class="ai-insight">
+                        High responder. Usually replies within 1 hour during work hours (9am-6pm PT).
+                    </div>
+                </div>
+
+                <div class="contact-section">
+                    <div class="section-title">🔗 Links</div>
+                    <div class="contact-stats">
+                        <a href="#" style="color: var(--primary); text-decoration: none; display: block; margin-bottom: 8px;">LinkedIn</a>
+                        <a href="#" style="color: var(--primary); text-decoration: none; display: block; margin-bottom: 8px;">GitHub</a>
+                        <a href="#" style="color: var(--primary); text-decoration: none; display: block;">Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Brand Introduction
+        const brandIntro = document.getElementById('brand-intro');
+        const hasSeenIntro = localStorage.getItem('hypermail_intro_seen');
+
+        if (!hasSeenIntro) {
+            // Phase 1: Show H (1.5s)
+            setTimeout(() => {
+                document.querySelector('.brand-h').style.display = 'none';
+                const fullBrand = document.querySelector('.brand-full');
+                fullBrand.classList.add('active');
+
+                // Phase 2: Animate letters
+                const letters = document.querySelectorAll('.brand-letters span');
+                letters.forEach((letter, i) => {
+                    letter.style.animation = `letterAppear 0.3s ease-out ${i * 0.08}s forwards`;
+                });
+
+                // Phase 3: Show logo
+                setTimeout(() => {
+                    const logo = document.querySelector('.brand-logo');
+                    logo.style.animation = 'logoAppear 0.6s ease-out forwards';
+                    logo.style.transform = 'scale(0.8)';
+                }, 1000);
+
+                // Phase 4: Show tagline
+                setTimeout(() => {
+                    const tagline = document.querySelector('.brand-tagline');
+                    tagline.style.animation = 'taglineAppear 0.6s ease-out 0.3s forwards';
+                }, 2000);
+
+                // Phase 5: Fade to landing page
+                setTimeout(() => {
+                    brandIntro.classList.add('hidden');
+                    localStorage.setItem('hypermail_intro_seen', 'true');
+                }, 4500);
+            }, 1500);
+        } else {
+            brandIntro.classList.add('hidden');
+        }
+
+        // Skip intro on click
+        brandIntro.addEventListener('click', () => {
+            brandIntro.classList.add('hidden');
+            localStorage.setItem('hypermail_intro_seen', 'true');
+        });
+
+        // Modal Functions
+        function showSignUp() {
+            document.getElementById('signup-modal').classList.add('active');
+        }
+
+        function showSignIn() {
+            closeModal('signup-modal');
+            document.getElementById('signin-modal').classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Close modal on backdrop click
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+            backdrop.addEventListener('click', (e) => {
+                if (e.target === backdrop) {
+                    backdrop.classList.remove('active');
+                }
+            });
+        });
+
+        // OAuth Signup
+        function oauthSignup(provider) {
+            // Simulate OAuth flow
+            closeModal('signup-modal');
+            closeModal('signin-modal');
+            startImport();
+        }
+
+        // Email Signup
+        function emailSignup() {
+            const email = document.getElementById('signup-email')?.value;
+            if (email && email.includes('@')) {
+                closeModal('signup-modal');
+                closeModal('signin-modal');
+                startImport();
+            }
+        }
+
+        // Import Animation
+        function startImport() {
+            const importScreen = document.getElementById('import-screen');
+            importScreen.classList.add('active');
+
+            // Create particles
+            createParticles();
+
+            // Simulate progress
+            let progress = 0;
+            const progressFill = document.getElementById('progress-fill');
+            const progressCount = document.getElementById('import-count');
+            const importTitle = document.getElementById('import-title');
+
+            const messages = [
+                'Organizing your emails...',
+                'Analyzing priorities...',
+                'Learning your contacts...',
+                'Setting up AI models...',
+                'Building smart categories...'
+            ];
+
+            let messageIndex = 0;
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+
+                progressFill.style.width = progress + '%';
+                progressCount.textContent = Math.floor(progress * 42.83) + ' emails sorted';
+
+                // Change message
+                if (progress > 20 * (messageIndex + 1)) {
+                    messageIndex++;
+                    if (messageIndex < messages.length) {
+                        importTitle.textContent = messages[messageIndex];
+                    }
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        importScreen.classList.remove('active');
+                        showInbox();
+                    }, 1000);
+                }
+            }, 300);
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            container.innerHTML = '';
+
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Show Inbox
+        function showInbox() {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('inbox').classList.add('active');
+        }
+
+        // Email Selection
+        function selectEmail(index) {
+            document.querySelectorAll('.email-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.email-item')[index]?.classList.add('active');
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Only in inbox
+            if (!document.getElementById('inbox').classList.contains('active')) return;
+
+            // Compose
+            if (e.key === 'c' && !e.metaKey && !e.ctrlKey) {
+                e.preventDefault();
+                alert('Compose feature coming soon! Press C to compose.');
+            }
+
+            // Navigation
+            if (e.key === 'j') {
+                e.preventDefault();
+                alert('Press J to navigate to next email');
+            }
+
+            if (e.key === 'k') {
+                e.preventDefault();
+                alert('Press K to navigate to previous email');
+            }
+
+            // Archive
+            if (e.key === 'e') {
+                e.preventDefault();
+                alert('Press E to archive');
+            }
+
+            // Reply
+            if (e.key === 'r') {
+                e.preventDefault();
+                alert('Press R to reply');
+            }
+
+            // Command palette
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                alert('Command Palette (⌘K) - Search anything, run any action');
+            }
+
+            // Show shortcuts
+            if ((e.metaKey || e.ctrlKey) && e.key === '/') {
+                e.preventDefault();
+                alert('Keyboard Shortcuts:\n\nNavigation:\nJ/K - Next/Previous email\nG+I - Go to Inbox\n\nActions:\nC - Compose\nR - Reply\nE - Archive\n\nOther:\n⌘K - Command Palette\n⌘/ - Show shortcuts');
+            }
+        });
+
+        // Demo Mode - Auto-start after a few seconds for demo
+        setTimeout(() => {
+            if (window.location.hash === '#demo') {
+                showSignUp();
+                setTimeout(() => {
+                    oauthSignup('google');
+                }, 1000);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
