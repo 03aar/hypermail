@@ -21,15 +21,16 @@
             --gray-400: #A3A3A3;
             --gray-500: #737373;
             --gray-600: #525252;
-            --gray-700: #404040;
-            --gray-800: #262626;
-            --gray-900: #171717;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             color: var(--black);
-            background: var(--white);
+            background: var(--gray-50);
             overflow-x: hidden;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
@@ -103,14 +104,14 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 64px;
+            height: 72px;
             background: var(--white);
-            border-bottom: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 32px;
+            padding: 0 40px;
         }
 
         .logo {
@@ -118,21 +119,22 @@
             font-weight: 700;
             text-decoration: none;
             color: var(--black);
+            letter-spacing: -0.5px;
         }
 
         .header-nav {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
 
         .btn {
-            padding: 10px 24px;
-            border-radius: 4px;
+            padding: 12px 28px;
+            border-radius: 24px;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid var(--black);
+            transition: all 0.2s ease;
+            border: 2px solid var(--black);
             background: transparent;
             color: var(--black);
             text-decoration: none;
@@ -142,6 +144,12 @@
         .btn:hover {
             background: var(--black);
             color: var(--white);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn-primary {
@@ -150,72 +158,92 @@
         }
 
         .btn-primary:hover {
-            background: var(--gray-800);
+            background: var(--gray-600);
+            border-color: var(--gray-600);
         }
 
         /* Hero */
         .hero {
-            padding: 160px 32px 80px;
+            padding: 180px 40px 100px;
             text-align: center;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .hero-title {
-            font-size: 64px;
+            font-size: 72px;
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 24px;
+            letter-spacing: -1.5px;
         }
 
         .hero-subtitle {
             font-size: 24px;
             color: var(--gray-600);
             margin-bottom: 48px;
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            padding: 16px 48px;
+            font-size: 16px;
+            border-radius: 32px;
         }
 
         /* Features */
         .features {
-            padding: 80px 32px;
-            background: var(--gray-50);
+            padding: 100px 40px;
+            background: var(--white);
         }
 
         .features-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
         }
 
         .feature {
-            background: var(--white);
-            padding: 40px;
+            background: var(--gray-50);
+            padding: 48px;
+            border-radius: 16px;
             border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--black);
         }
 
         .feature-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
         }
 
         .feature-desc {
             color: var(--gray-600);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 15px;
         }
 
         /* Modal */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             z-index: 9000;
             display: none;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
 
         .modal-backdrop.active {
@@ -226,11 +254,12 @@
         .modal {
             background: var(--white);
             padding: 48px;
-            max-width: 500px;
+            max-width: 540px;
             width: 90%;
-            border: 1px solid var(--gray-200);
-            transform: scale(0.9);
-            transition: transform 0.3s;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .modal-backdrop.active .modal {
@@ -243,56 +272,71 @@
         }
 
         .modal-close button {
-            background: none;
+            width: 36px;
+            height: 36px;
+            background: var(--gray-100);
             border: none;
-            font-size: 24px;
+            border-radius: 18px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--gray-600);
+            transition: all 0.2s ease;
+        }
+
+        .modal-close button:hover {
+            background: var(--black);
+            color: var(--white);
         }
 
         .modal-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             margin-bottom: 8px;
             text-align: center;
+            letter-spacing: -0.5px;
         }
 
         .modal-subtitle {
             color: var(--gray-600);
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
+            font-size: 16px;
         }
 
         .auth-buttons {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         .auth-btn {
             height: 56px;
-            border: 1px solid var(--gray-300);
+            border: 2px solid var(--gray-200);
+            border-radius: 28px;
             background: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .auth-btn:hover {
             border-color: var(--black);
             background: var(--gray-50);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .divider {
             text-align: center;
-            margin: 24px 0;
+            margin: 32px 0;
             position: relative;
             color: var(--gray-500);
+            font-size: 14px;
         }
 
         .divider::before,
@@ -300,7 +344,7 @@
             content: '';
             position: absolute;
             top: 50%;
-            width: 45%;
+            width: 42%;
             height: 1px;
             background: var(--gray-300);
         }
@@ -311,16 +355,19 @@
         .input {
             width: 100%;
             height: 56px;
-            border: 1px solid var(--gray-300);
-            padding: 0 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: 28px;
+            padding: 0 24px;
             font-size: 16px;
             margin-bottom: 16px;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         .input:focus {
             outline: none;
             border-color: var(--black);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         }
 
         .btn-block {
@@ -328,57 +375,78 @@
             height: 56px;
         }
 
-        /* Inbox */
+        /* Inbox Container */
         #inbox {
             display: none;
-            height: 100vh;
-            padding-top: 64px;
+            padding-top: 72px;
+            min-height: 100vh;
         }
 
         #inbox.active {
             display: block;
         }
 
+        .inbox-wrapper {
+            max-width: 1600px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
         .inbox-container {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
             display: flex;
-            height: calc(100vh - 64px);
+            height: calc(100vh - 160px);
+            overflow: hidden;
         }
 
         .sidebar {
-            width: 240px;
-            background: var(--white);
+            width: 260px;
+            background: var(--gray-50);
             border-right: 1px solid var(--gray-200);
-            padding: 24px 0;
+            padding: 32px 0;
             overflow-y: auto;
         }
 
         .nav-item {
-            padding: 12px 24px;
+            padding: 14px 32px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-left: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         .nav-item:hover {
-            background: var(--gray-50);
+            background: var(--white);
         }
 
         .nav-item.active {
-            background: var(--gray-100);
+            background: var(--white);
             border-left-color: var(--black);
             font-weight: 600;
         }
 
         .nav-count {
-            color: var(--gray-500);
-            font-size: 14px;
+            background: var(--gray-200);
+            color: var(--gray-600);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .nav-item.active .nav-count {
+            background: var(--black);
+            color: var(--white);
         }
 
         .email-list {
-            width: 420px;
+            width: 480px;
             background: var(--white);
             border-right: 1px solid var(--gray-200);
             overflow-y: auto;
@@ -386,9 +454,9 @@
 
         .email-item {
             padding: 20px 24px;
-            border-bottom: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-100);
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.15s ease;
             position: relative;
         }
 
@@ -398,6 +466,16 @@
 
         .email-item.active {
             background: var(--gray-100);
+        }
+
+        .email-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--black);
         }
 
         .email-item.unread {
@@ -414,11 +492,14 @@
         .email-date {
             color: var(--gray-500);
             font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .email-subject {
             margin-bottom: 4px;
             font-size: 14px;
+            font-weight: 600;
         }
 
         .email-preview {
@@ -433,54 +514,60 @@
             flex: 1;
             background: var(--white);
             overflow-y: auto;
-            padding: 32px;
+            padding: 40px;
         }
 
         .email-actions {
             display: flex;
             gap: 12px;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
+            margin-bottom: 40px;
+            padding-bottom: 32px;
             border-bottom: 1px solid var(--gray-200);
         }
 
         .action-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--gray-300);
+            padding: 10px 20px;
+            border: 2px solid var(--gray-200);
             background: var(--white);
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.15s;
+            transition: all 0.15s ease;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .action-btn:hover {
-            background: var(--gray-100);
+            background: var(--black);
+            color: var(--white);
             border-color: var(--black);
+            transform: translateY(-1px);
         }
 
         .email-content {
-            max-width: 680px;
+            max-width: 720px;
         }
 
         .email-meta {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
             border-bottom: 1px solid var(--gray-200);
         }
 
         .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
             background: var(--black);
             color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
         }
 
         .sender-info {
@@ -488,8 +575,9 @@
         }
 
         .sender-name {
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 2px;
         }
 
         .sender-email {
@@ -499,6 +587,7 @@
 
         .email-body {
             line-height: 1.8;
+            font-size: 16px;
         }
 
         .email-body p {
@@ -507,22 +596,22 @@
 
         /* Compose Modal */
         #compose-modal .modal {
-            max-width: 800px;
-            padding: 32px;
+            max-width: 840px;
+            padding: 40px;
         }
 
         .compose-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
             border-bottom: 1px solid var(--gray-200);
         }
 
         .compose-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
         }
 
         .compose-actions {
@@ -531,73 +620,82 @@
         }
 
         .compose-field {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .compose-field label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .compose-field input {
             width: 100%;
-            height: 48px;
-            border: 1px solid var(--gray-300);
-            padding: 0 16px;
+            height: 52px;
+            border: 2px solid var(--gray-200);
+            border-radius: 26px;
+            padding: 0 20px;
             font-size: 15px;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         .compose-field input:focus {
             outline: none;
             border-color: var(--black);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         }
 
         .compose-body {
-            min-height: 300px;
-            border: 1px solid var(--gray-300);
-            padding: 16px;
-            font-size: 15px;
+            width: 100%;
+            min-height: 320px;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            font-size: 16px;
             line-height: 1.6;
             resize: vertical;
             font-family: inherit;
+            transition: all 0.2s ease;
         }
 
         .compose-body:focus {
             outline: none;
             border-color: var(--black);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         }
 
         .compose-toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 16px;
-            padding-top: 16px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid var(--gray-200);
         }
 
         .toolbar-left {
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
         /* Command Palette */
         #command-palette {
             position: fixed;
-            top: 80px;
+            top: 120px;
             left: 50%;
             transform: translateX(-50%);
-            width: 600px;
+            width: 640px;
             background: var(--white);
-            border: 1px solid var(--gray-300);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
             z-index: 9500;
             display: none;
             opacity: 0;
             transform: translateX(-50%) scale(0.95);
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            overflow: hidden;
         }
 
         #command-palette.active {
@@ -608,11 +706,12 @@
 
         .palette-search {
             width: 100%;
-            height: 60px;
+            height: 64px;
             border: none;
             border-bottom: 1px solid var(--gray-200);
-            padding: 0 20px;
+            padding: 0 24px;
             font-size: 16px;
+            font-family: inherit;
         }
 
         .palette-search:focus {
@@ -620,17 +719,17 @@
         }
 
         .palette-results {
-            max-height: 400px;
+            max-height: 420px;
             overflow-y: auto;
         }
 
         .palette-item {
-            padding: 16px 20px;
+            padding: 16px 24px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.1s ease;
         }
 
         .palette-item:hover,
@@ -639,15 +738,19 @@
         }
 
         .palette-shortcut {
-            color: var(--gray-500);
-            font-size: 13px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
         }
 
         /* Toast Notifications */
         .toast-container {
             position: fixed;
-            bottom: 32px;
-            right: 32px;
+            bottom: 40px;
+            right: 40px;
             z-index: 10000;
             display: flex;
             flex-direction: column;
@@ -658,11 +761,13 @@
             background: var(--black);
             color: var(--white);
             padding: 16px 24px;
-            min-width: 300px;
+            min-width: 320px;
+            border-radius: 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 16px;
+            box-shadow: var(--shadow-lg);
             opacity: 0;
             transform: translateY(20px);
             animation: toastIn 0.3s forwards;
@@ -673,12 +778,19 @@
         }
 
         .toast-undo {
-            background: none;
-            border: 1px solid var(--white);
-            color: var(--white);
-            padding: 4px 12px;
+            background: var(--white);
+            border: none;
+            color: var(--black);
+            padding: 6px 16px;
+            border-radius: 14px;
             cursor: pointer;
             font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .toast-undo:hover {
+            background: var(--gray-200);
         }
 
         @keyframes toastIn {
@@ -695,7 +807,7 @@
             }
         }
 
-        /* Loading States */
+        /* Loading */
         .loading {
             display: inline-block;
             width: 16px;
@@ -711,9 +823,32 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .inbox-container {
+                border-radius: 0;
+            }
+
+            .inbox-wrapper {
+                padding: 0;
+                margin: 0;
+            }
+
+            #inbox {
+                padding-top: 72px;
+            }
+
+            .inbox-container {
+                height: calc(100vh - 72px);
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 40px;
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
             }
 
             .inbox-container {
@@ -725,6 +860,14 @@
                 width: 100%;
                 border-right: none;
                 border-bottom: 1px solid var(--gray-200);
+            }
+
+            .sidebar {
+                max-height: 200px;
+            }
+
+            .email-list {
+                max-height: 300px;
             }
 
             #command-palette {
@@ -739,6 +882,25 @@
 
         .fade-in {
             animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
         }
     </style>
 </head>
@@ -769,7 +931,7 @@
         <section class="hero">
             <h1 class="hero-title">Email, elevated to intelligence</h1>
             <p class="hero-subtitle">The fastest, smartest email platform built for executives and high-performance teams</p>
-            <button class="btn btn-primary" style="padding: 16px 48px; font-size: 16px;" onclick="app.showSignUp()">Get Started</button>
+            <button class="btn btn-primary hero-cta" onclick="app.showSignUp()">Get Started</button>
         </section>
 
         <section class="features">
@@ -819,40 +981,42 @@
             </nav>
         </header>
 
-        <div class="inbox-container">
-            <div class="sidebar">
-                <div class="nav-item active" onclick="app.filterEmails('inbox')">
-                    <span>Inbox</span>
-                    <span class="nav-count" id="inbox-count">13</span>
+        <div class="inbox-wrapper">
+            <div class="inbox-container">
+                <div class="sidebar">
+                    <div class="nav-item active" onclick="app.filterEmails('inbox')">
+                        <span>Inbox</span>
+                        <span class="nav-count" id="inbox-count">13</span>
+                    </div>
+                    <div class="nav-item" onclick="app.filterEmails('starred')">
+                        <span>Starred</span>
+                    </div>
+                    <div class="nav-item" onclick="app.filterEmails('sent')">
+                        <span>Sent</span>
+                    </div>
+                    <div class="nav-item" onclick="app.filterEmails('drafts')">
+                        <span>Drafts</span>
+                        <span class="nav-count">2</span>
+                    </div>
+                    <div class="nav-item" onclick="app.filterEmails('all')">
+                        <span>All Mail</span>
+                    </div>
+                    <div class="nav-item" onclick="app.filterEmails('trash')">
+                        <span>Trash</span>
+                    </div>
                 </div>
-                <div class="nav-item" onclick="app.filterEmails('starred')">
-                    <span>Starred</span>
-                </div>
-                <div class="nav-item" onclick="app.filterEmails('sent')">
-                    <span>Sent</span>
-                </div>
-                <div class="nav-item" onclick="app.filterEmails('drafts')">
-                    <span>Drafts</span>
-                    <span class="nav-count">2</span>
-                </div>
-                <div class="nav-item" onclick="app.filterEmails('all')">
-                    <span>All Mail</span>
-                </div>
-                <div class="nav-item" onclick="app.filterEmails('trash')">
-                    <span>Trash</span>
-                </div>
-            </div>
 
-            <div class="email-list" id="email-list"></div>
+                <div class="email-list" id="email-list"></div>
 
-            <div class="reading-pane" id="reading-pane">
-                <div class="email-actions">
-                    <button class="action-btn" onclick="app.archiveEmail()">Archive (E)</button>
-                    <button class="action-btn" onclick="app.deleteEmail()">Delete</button>
-                    <button class="action-btn" onclick="app.starEmail()">Star</button>
-                    <button class="btn btn-primary" style="margin-left: auto;" onclick="app.reply()">Reply (R)</button>
+                <div class="reading-pane" id="reading-pane">
+                    <div class="email-actions">
+                        <button class="action-btn" onclick="app.archiveEmail()">Archive (E)</button>
+                        <button class="action-btn" onclick="app.deleteEmail()">Delete</button>
+                        <button class="action-btn" onclick="app.starEmail()">Star (S)</button>
+                        <button class="btn btn-primary" style="margin-left: auto; padding: 10px 24px; border-radius: 20px;" onclick="app.reply()">Reply (R)</button>
+                    </div>
+                    <div id="email-content"></div>
                 </div>
-                <div id="email-content"></div>
             </div>
         </div>
     </div>
@@ -1154,7 +1318,7 @@
                         </div>
                         <div class="email-date">${email.date}</div>
                     </div>
-                    <h2 style="font-size: 24px; margin-bottom: 24px;">${email.subject}</h2>
+                    <h2 style="font-size: 28px; margin-bottom: 32px; font-weight: 700; letter-spacing: -0.5px;">${email.subject}</h2>
                     <div class="email-body">${email.body.split('\n').map(p => `<p>${p}</p>`).join('')}</div>
                 `;
 
@@ -1269,7 +1433,7 @@
 
                 const backdrop = document.createElement('div');
                 backdrop.className = 'modal-backdrop active';
-                backdrop.style.background = 'transparent';
+                backdrop.style.background = 'rgba(0,0,0,0.4)';
                 backdrop.id = 'palette-backdrop';
                 backdrop.onclick = () => this.closeCommandPalette();
                 document.body.appendChild(backdrop);
@@ -1333,10 +1497,8 @@
             }
         };
 
-        // Initialize app
         app.init();
 
-        // Search in command palette
         document.getElementById('palette-search')?.addEventListener('input', (e) => {
             app.renderCommands(e.target.value);
         });
