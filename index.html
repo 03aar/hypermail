@@ -822,6 +822,372 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Onboarding Flow */
+        .onboarding-container {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .onboarding-container.active {
+            display: flex;
+        }
+
+        .onboarding-wrapper {
+            width: 100%;
+            max-width: 680px;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .onboarding-step {
+            display: none;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .onboarding-step.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+            animation: slideInOnboarding 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .onboarding-step.exiting {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        @keyframes slideInOnboarding {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .onboarding-content {
+            text-align: center;
+        }
+
+        .onboarding-icon {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icon-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 60px;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        .icon-circle.icon-success {
+            background: var(--white);
+            border: 3px solid var(--black);
+            color: var(--black);
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .onboarding-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .onboarding-subtitle {
+            font-size: 20px;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+            line-height: 1.6;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .onboarding-visual {
+            margin: 48px 0;
+        }
+
+        .feature-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .preview-stat {
+            background: var(--gray-50);
+            padding: 40px 24px;
+            border-radius: 24px;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .preview-stat:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--black);
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        .onboarding-shortcuts {
+            max-width: 480px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .shortcut-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 20px 24px;
+            background: var(--gray-50);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .shortcut-row:hover {
+            background: var(--white);
+            border-color: var(--black);
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .shortcut-key {
+            min-width: 80px;
+            background: var(--black);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .shortcut-desc {
+            flex: 1;
+            font-size: 16px;
+            color: var(--gray-700);
+            font-weight: 500;
+        }
+
+        .feature-list {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-item:hover {
+            padding-left: 12px;
+        }
+
+        .feature-bullet {
+            width: 12px;
+            height: 12px;
+            background: var(--black);
+            border-radius: 6px;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .feature-detail {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .ready-tips {
+            display: grid;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tip-box {
+            background: var(--gray-50);
+            padding: 28px 32px;
+            border-radius: 20px;
+            text-align: left;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .tip-box:hover {
+            border-color: var(--black);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tip-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: var(--gray-500);
+        }
+
+        .tip-text {
+            font-size: 16px;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .tip-text kbd {
+            background: var(--black);
+            color: var(--white);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .onboarding-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 32px 40px;
+            z-index: 100;
+        }
+
+        .onboarding-progress {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .progress-step {
+            width: 60px;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .progress-step:hover {
+            background: var(--gray-400);
+        }
+
+        .progress-step.active {
+            background: var(--black);
+        }
+
+        .onboarding-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .btn-skip {
+            background: transparent;
+            border: none;
+            color: var(--gray-600);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-skip:hover {
+            background: var(--gray-100);
+            color: var(--black);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-back {
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: 2px solid var(--gray-300);
+            background: var(--white);
+            color: var(--black);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            border-color: var(--black);
+            background: var(--gray-50);
+        }
+
         /* Mobile Navigation */
         .mobile-header {
             display: none;
@@ -1219,6 +1585,100 @@
                 padding: 6px 14px;
                 font-size: 12px;
             }
+
+            /* Onboarding responsive */
+            .onboarding-wrapper {
+                padding: 40px 20px 180px;
+            }
+
+            .onboarding-title {
+                font-size: 32px;
+                letter-spacing: -1px;
+            }
+
+            .onboarding-subtitle {
+                font-size: 17px;
+                padding: 0 10px;
+            }
+
+            .icon-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .icon-circle span {
+                font-size: 40px !important;
+            }
+
+            .feature-preview {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .preview-stat {
+                padding: 32px 20px;
+            }
+
+            .stat-number {
+                font-size: 48px;
+            }
+
+            .stat-label {
+                font-size: 14px;
+            }
+
+            .shortcut-row {
+                padding: 16px 20px;
+                gap: 16px;
+            }
+
+            .shortcut-key {
+                min-width: 60px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .shortcut-desc {
+                font-size: 15px;
+            }
+
+            .feature-item {
+                padding: 20px 0;
+            }
+
+            .feature-name {
+                font-size: 17px;
+            }
+
+            .feature-detail {
+                font-size: 14px;
+            }
+
+            .tip-box {
+                padding: 24px;
+            }
+
+            .tip-text {
+                font-size: 15px;
+            }
+
+            .onboarding-footer {
+                padding: 24px 20px;
+            }
+
+            .onboarding-progress {
+                gap: 8px;
+                margin-bottom: 24px;
+            }
+
+            .progress-step {
+                width: 50px;
+            }
+
+            .btn-skip {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1244,6 +1704,56 @@
 
             .mobile-actions-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Onboarding extra small screens */
+            .onboarding-title {
+                font-size: 28px;
+            }
+
+            .onboarding-subtitle {
+                font-size: 16px;
+            }
+
+            .icon-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .icon-circle span {
+                font-size: 32px !important;
+            }
+
+            .stat-number {
+                font-size: 40px;
+            }
+
+            .feature-preview {
+                gap: 12px;
+            }
+
+            .progress-step {
+                width: 40px;
+                height: 5px;
+            }
+
+            .onboarding-actions {
+                flex-direction: column-reverse;
+                gap: 16px;
+            }
+
+            .nav-buttons {
+                width: 100%;
+            }
+
+            .btn-back,
+            #onboarding-next {
+                flex: 1;
+            }
+
+            .btn-skip {
+                width: 100%;
+                text-align: center;
             }
         }
 
@@ -1458,10 +1968,159 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toast-container"></div>
 
+    <!-- Onboarding Flow -->
+    <div id="onboarding" class="onboarding-container">
+        <div class="onboarding-wrapper">
+            <!-- Step 1: Welcome -->
+            <div class="onboarding-step active" data-step="1">
+                <div class="onboarding-content">
+                    <div class="onboarding-icon">
+                        <div class="icon-circle">
+                            <span style="font-size: 48px; font-weight: 700;">H</span>
+                        </div>
+                    </div>
+                    <h1 class="onboarding-title">Welcome to HyperMail</h1>
+                    <p class="onboarding-subtitle">The fastest, smartest email experience ever built. Let's get you set up in 30 seconds.</p>
+                    <div class="onboarding-visual">
+                        <div class="feature-preview">
+                            <div class="preview-stat">
+                                <div class="stat-number">10x</div>
+                                <div class="stat-label">Faster than traditional email</div>
+                            </div>
+                            <div class="preview-stat">
+                                <div class="stat-number">2 min</div>
+                                <div class="stat-label">Average inbox zero time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Keyboard Shortcuts -->
+            <div class="onboarding-step" data-step="2">
+                <div class="onboarding-content">
+                    <div class="onboarding-icon">
+                        <div class="icon-circle">
+                            <span style="font-size: 32px;">⚡</span>
+                        </div>
+                    </div>
+                    <h1 class="onboarding-title">Lightning-Fast Navigation</h1>
+                    <p class="onboarding-subtitle">Process emails in seconds with powerful keyboard shortcuts</p>
+                    <div class="onboarding-shortcuts">
+                        <div class="shortcut-row">
+                            <div class="shortcut-key">C</div>
+                            <div class="shortcut-desc">Compose new email</div>
+                        </div>
+                        <div class="shortcut-row">
+                            <div class="shortcut-key">R</div>
+                            <div class="shortcut-desc">Reply to email</div>
+                        </div>
+                        <div class="shortcut-row">
+                            <div class="shortcut-key">E</div>
+                            <div class="shortcut-desc">Archive email</div>
+                        </div>
+                        <div class="shortcut-row">
+                            <div class="shortcut-key">J / K</div>
+                            <div class="shortcut-desc">Navigate up/down</div>
+                        </div>
+                        <div class="shortcut-row">
+                            <div class="shortcut-key">⌘K</div>
+                            <div class="shortcut-desc">Command palette</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: AI Features -->
+            <div class="onboarding-step" data-step="3">
+                <div class="onboarding-content">
+                    <div class="onboarding-icon">
+                        <div class="icon-circle">
+                            <span style="font-size: 32px;">✨</span>
+                        </div>
+                    </div>
+                    <h1 class="onboarding-title">AI-Powered Intelligence</h1>
+                    <p class="onboarding-subtitle">Smart features that learn and adapt to your workflow</p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <div class="feature-text">
+                                <div class="feature-name">Smart Triage</div>
+                                <div class="feature-detail">Automatically prioritize important emails</div>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <div class="feature-text">
+                                <div class="feature-name">AI Drafting</div>
+                                <div class="feature-detail">Generate responses in your writing style</div>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <div class="feature-text">
+                                <div class="feature-name">Smart Search</div>
+                                <div class="feature-detail">Find anything instantly with natural language</div>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-bullet"></div>
+                            <div class="feature-text">
+                                <div class="feature-name">Follow-up Reminders</div>
+                                <div class="feature-detail">Never miss an important reply</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Ready -->
+            <div class="onboarding-step" data-step="4">
+                <div class="onboarding-content">
+                    <div class="onboarding-icon">
+                        <div class="icon-circle icon-success">
+                            <span style="font-size: 32px;">✓</span>
+                        </div>
+                    </div>
+                    <h1 class="onboarding-title">You're All Set!</h1>
+                    <p class="onboarding-subtitle">Your inbox is ready. Let's transform how you handle email.</p>
+                    <div class="ready-tips">
+                        <div class="tip-box">
+                            <div class="tip-title">Pro Tip</div>
+                            <div class="tip-text">Press <kbd>?</kbd> anytime to see all keyboard shortcuts</div>
+                        </div>
+                        <div class="tip-box">
+                            <div class="tip-title">Quick Start</div>
+                            <div class="tip-text">Try pressing <kbd>C</kbd> to compose your first email</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress & Navigation -->
+            <div class="onboarding-footer">
+                <div class="onboarding-progress">
+                    <div class="progress-step active" data-target="1"></div>
+                    <div class="progress-step" data-target="2"></div>
+                    <div class="progress-step" data-target="3"></div>
+                    <div class="progress-step" data-target="4"></div>
+                </div>
+                <div class="onboarding-actions">
+                    <button class="btn-skip" onclick="app.skipOnboarding()">Skip</button>
+                    <div class="nav-buttons">
+                        <button class="btn-back" onclick="app.prevOnboardingStep()" style="display: none;">Back</button>
+                        <button class="btn btn-primary" onclick="app.nextOnboardingStep()" id="onboarding-next">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const app = {
             currentView: 'landing',
             selectedEmailIndex: 0,
+            currentOnboardingStep: 1,
             emails: [
                 {
                     id: 1,
@@ -1754,7 +2413,7 @@
             oauth(provider) {
                 this.closeModal();
                 this.showToast(`Connecting to ${provider}...`);
-                setTimeout(() => this.showInbox(), 1000);
+                setTimeout(() => this.startOnboarding(), 800);
             },
 
             emailAuth() {
@@ -1762,8 +2421,88 @@
                 if (email && email.includes('@')) {
                     this.closeModal();
                     this.showToast('Sending verification email...');
-                    setTimeout(() => this.showInbox(), 1000);
+                    setTimeout(() => this.startOnboarding(), 800);
                 }
+            },
+
+            startOnboarding() {
+                const hasOnboarded = localStorage.getItem('hypermail_onboarded');
+                if (hasOnboarded) {
+                    this.showInbox();
+                    return;
+                }
+
+                this.currentOnboardingStep = 1;
+                document.getElementById('landing').style.display = 'none';
+                document.getElementById('onboarding').classList.add('active');
+                this.updateOnboardingStep();
+            },
+
+            nextOnboardingStep() {
+                if (this.currentOnboardingStep < 4) {
+                    this.currentOnboardingStep++;
+                    this.updateOnboardingStep();
+                } else {
+                    this.completeOnboarding();
+                }
+            },
+
+            prevOnboardingStep() {
+                if (this.currentOnboardingStep > 1) {
+                    this.currentOnboardingStep--;
+                    this.updateOnboardingStep();
+                }
+            },
+
+            updateOnboardingStep() {
+                // Update steps
+                document.querySelectorAll('.onboarding-step').forEach((step, index) => {
+                    const stepNumber = index + 1;
+                    if (stepNumber === this.currentOnboardingStep) {
+                        step.classList.add('active');
+                        step.classList.remove('exiting');
+                    } else if (step.classList.contains('active')) {
+                        step.classList.add('exiting');
+                        setTimeout(() => {
+                            step.classList.remove('active', 'exiting');
+                        }, 300);
+                    }
+                });
+
+                // Update progress indicators
+                document.querySelectorAll('.progress-step').forEach((progress, index) => {
+                    if (index < this.currentOnboardingStep) {
+                        progress.classList.add('active');
+                    } else {
+                        progress.classList.remove('active');
+                    }
+                });
+
+                // Update buttons
+                const backBtn = document.querySelector('.btn-back');
+                const nextBtn = document.getElementById('onboarding-next');
+
+                if (this.currentOnboardingStep === 1) {
+                    backBtn.style.display = 'none';
+                } else {
+                    backBtn.style.display = 'block';
+                }
+
+                if (this.currentOnboardingStep === 4) {
+                    nextBtn.textContent = 'Get Started';
+                } else {
+                    nextBtn.textContent = 'Next';
+                }
+            },
+
+            skipOnboarding() {
+                this.completeOnboarding();
+            },
+
+            completeOnboarding() {
+                localStorage.setItem('hypermail_onboarded', 'true');
+                document.getElementById('onboarding').classList.remove('active');
+                this.showInbox();
             },
 
             showInbox() {
@@ -2001,6 +2740,14 @@
 
         document.getElementById('palette-search')?.addEventListener('input', (e) => {
             app.renderCommands(e.target.value);
+        });
+
+        // Progress step click handlers
+        document.querySelectorAll('.progress-step').forEach((step, index) => {
+            step.addEventListener('click', () => {
+                app.currentOnboardingStep = index + 1;
+                app.updateOnboardingStep();
+            });
         });
     </script>
 </body>
